@@ -20,3 +20,17 @@ export const userLoginSchema = z.object({
     required_error: "Password is required"
   }).min(8, "Password must be at least 8 characters long"),
 });
+
+export const requestOTPSchema = z.object({
+  email: z.string({
+    required_error: "Email is required"
+  }).email("Invalid email formal")
+})
+
+export const updatePasswordSchema = z.object({
+  email: z.string({
+    required_error: "Email is required"
+  }).email("Invalid email formal"),
+  otp: z.string({ required_error: 'OTP is required' }).min(6, 'OTP must be six characters long').max(6, 'OTP must be six characters long'),
+  newPassword: z.string({ required_error: 'New Password is required' }).min(8, 'Password must be at least 8 characters long')
+})
