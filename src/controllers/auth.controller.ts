@@ -1,3 +1,4 @@
+import * as jwt from 'jsonwebtoken';
 import { Request, Response } from "express";
 import { User } from "../models/user.model";
 import { OTP } from "../models/recover.model";
@@ -6,6 +7,7 @@ import { createAccessToken } from "../libs/jwt";
 import * as otpGenerator from "otp-generator";
 import { sendMail } from "../libs/nodemailer";
 import { OTPTemplate } from "../email-templates/OTP";
+import { TOKEN_SECRET } from '../config';
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -96,11 +98,14 @@ export const profile = async (req: Request, res: Response) => {
             .status(404)
             .json({ code: "error", message: "User not found" });
     return res.status(200).json({
-        id: userFound._id,
-        userName: userFound.userName,
-        email: userFound.email,
-        createdAt: userFound.createdAt,
-        updatedAt: userFound.updatedAt,
+        code: 'success',
+        user: {
+            id: userFound._id,
+            userName: userFound.userName,
+            email: userFound.email,
+            createdAt: userFound.createdAt,
+            updatedAt: userFound.updatedAt,
+        }
     });
 };
 
@@ -170,14 +175,8 @@ export const updatePassword = async (req: Request, res: Response) => {
         await OTP.findOneAndDelete({ userEmail: email })
 
         res.status(200).json({
-            message: "Password updated successfully",
-            user: {
-                id: updatedUser._id,
-                userName: updatedUser.userName,
-                email: updatedUser.email,
-                createdAt: updatedUser.createdAt,
-                updatedAt: updatedUser.updatedAt,
-            },
+            code: "success",
+            message: "Password updated successfully"
         });
     } catch (e) {
         console.log(e);
@@ -187,3 +186,27 @@ export const updatePassword = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const verifyToken = async (req: Request, res: Response) => {
+    const { token } = req.cookies;
+
+    if(!token) return res.status(401).json({ code: 'error', message: 'Unauthorized' })
+
+    jwt.verify(token, TOKEN_SECRET, async (err: any, user: any) => {
+        if(err) return res.status(401).json({ code: 'error', message: 'Unauthorized' });
+
+        const userFound = await User.findById(user?.id);
+        if(!userFound) return res.status(401).json({ code: 'error', message: 'Unauthorized' });
+
+        res.status(200).json({
+            message: "User logged in successfully",
+            user: {
+                id: userFound._id,
+                userName: userFound.userName,
+                email: userFound.email,
+                createdAt: userFound.createdAt,
+                updatedAt: userFound.updatedAt,
+            },
+        });
+    })
+}

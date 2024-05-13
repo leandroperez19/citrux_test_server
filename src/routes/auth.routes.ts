@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, logout, profile, register, requestOTP, updatePassword } from "../controllers/auth.controller";
+import { login, logout, profile, register, requestOTP, updatePassword, verifyToken } from "../controllers/auth.controller";
 import { authRequired } from "../middlewares/validateToken";
 import { validateSchema } from "../middlewares/validator.middleware";
 import { requestOTPSchema, updatePasswordSchema, userLoginSchema, userRegisterSchema } from "../schemas/user.schema";
@@ -17,6 +17,8 @@ router.post('/request-otp', validateSchema(requestOTPSchema), OTPCheck, requestO
 
 router.put('/update-user', validateSchema(updatePasswordSchema), validateOTP, updatePassword)
 
-router.get('/profile', authRequired, profile)
+router.get('/get-profile', authRequired, profile)
+
+router.get('/verify', verifyToken)
 
 export default router;

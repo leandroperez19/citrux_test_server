@@ -34,7 +34,6 @@ export const OTPTemplate = (message: string, userName: string) => {
 			.header img {
 				margin-right: 15px;
 				height: 35px;
-				width: 35px;
 				display: inline-block;
 			}
 
@@ -83,16 +82,15 @@ export const OTPTemplate = (message: string, userName: string) => {
 			<body>
 			<div class="container">
 				<div class="header">
-					<img src="https://i.ibb.co/3hPjcZB/logo.png" alt="logo" border="0">
-					<h1>Summarizer</h1>
+					<img src="https://i.ibb.co/HTSxnn5/logo-full.png" alt="logo" border="0">
 				</div>
 
 				<div class="content">
 					<p>
 						Hi, ${userName}!
-						We received a request to recover your Summarizer password. 
+						We received a request to recover your SummarAIzer password. 
 						To verify your identity, please use the code below within the next 5 minutes.
-						If you didn't request this change, reach support at <a href="mailto:summarizer@gmail.com">summarizer@gmail.com</a>.
+						If you didn't request this change, reach support at <a href="mailto:summaraizer@gmail.com">summarizer@gmail.com</a>.
 					</p>
 					<h4>${message}</h4>
 				</div>
