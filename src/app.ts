@@ -24,21 +24,14 @@ app.use("/api", authRoutes);
 app.use("/api", summaryRoutes);
 
 app.post("/api/post", async (req, res) => {
-    const request = await axios.post("https://api.restful-api.dev/objects", {
-        name: "Apple MacBook Pro 16",
-        data: {
-            year: 2019,
-            price: 1849.99,
-            "CPU model": "Intel Core i9",
-            "Hard disk size": "1 TB",
-        },
-    });
-    // const { email } = req.body;
-    // const userFound = await User.findOne({ email });
-    // if (!userFound) return res.status(404).json("this is an error");
-    // res.status(200).json(userFound?.userName);
-    if(!request) return res.status(400).json("sorry friend");
-    return res.status(200).json(JSON.stringify(request))
+    try {
+        const request = await axios.get("https://api.restful-api.dev/objects");
+        if(!request) return res.status(400).json("sorry friend");
+        return res.status(200).json(JSON.stringify(request))
+    } catch (error) {
+        console.log(error)
+        res.status(500).json('my bad dog')
+    }
 });
 
 export default app;
