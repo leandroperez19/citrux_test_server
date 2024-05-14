@@ -1,10 +1,11 @@
 import express from "express";
-const app = express();
 import cors from 'cors';
 import authRoutes from './routes/auth.routes'
 import summaryRoutes from './routes/summaries.routes';
 import cookieParser from "cookie-parser";
 import { FRONT_URL } from "./config";
+
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
