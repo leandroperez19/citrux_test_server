@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use("/api", authRoutes);
 app.use("/api", summaryRoutes);
 
-app.post("/api/post", async (req, res) => {
+app.post("/api/get", async (req, res) => {
     try {
         const response = await User.findOne({ email: 'perezbarahonaleandro@gmail.com' });
         const request = response;
