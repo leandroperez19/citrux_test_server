@@ -16,11 +16,14 @@ app.use(cors({
         'http://localhost:5173/sign-in',
         'https://citrux-test-client.netlify.app/sign-up', 
         'https://citrux-test-client.netlify.app/sign-in',
-        'https://citrux-test-client.netlify.app'
+        'https://citrux-test-client.netlify.app',
+        'https://summaraizer-client.vercel.app/sign-in',
+        'https://summaraizer-client.vercel.app',
+        'https://summaraizer-client.vercel.app/sign-up'
     ],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true,
-    allowedHeaders: ['Content-Type']
+    allowedHeaders: ['Content-Type', 'application/json']
 }));
 app.use(cookieParser());
 app.use('/api', authRoutes);
