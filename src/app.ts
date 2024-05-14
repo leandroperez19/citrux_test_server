@@ -4,6 +4,7 @@ import authRoutes from './routes/auth.routes'
 import summaryRoutes from './routes/summaries.routes';
 import cookieParser from "cookie-parser";
 import { FRONT_URL } from "./config";
+import { User } from "./models/user.model";
 
 const app = express();
 
@@ -19,9 +20,11 @@ app.use(cookieParser());
 app.use('/api', authRoutes);
 app.use('/api', summaryRoutes);
 
-app.get('/', (req, res) => res.send('Hello'))
-app.get('/test', (req, res) => res.send('Test'))
-app.get('/test/test', (req, res) => res.send('Test/test'))
-app.post('/api/post', (req, res) => res.status(200).json('hola'))
+app.post('/api/post', async (req, res) => {
+    const { email } = req.body;
+    const userFound = await User.findOne({ email });
+    if(!userFound) return res.status(404).json('this is an error')
+    res.status(200).json(userFound?.userName)
+})
 
 export default app;
