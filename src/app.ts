@@ -23,22 +23,9 @@ app.use(cookieParser());
 app.use("/api", authRoutes);
 app.use("/api", summaryRoutes);
 
-app.post("/api/post", (req, res) => {
-    try {
-        const request = 'a success request amigo';
-        if(!request) return res.status(400).json("sorry friend");
-        return res.status(200).json(JSON.stringify(request))
-    } catch (error) {
-        console.log(error)
-        res.status(500).json('my bad dog')
-    }
-});
-
-export default app;
-
-// app.post("/api/post", async (req, res) => {
+// app.post("/api/post", (req, res) => {
 //     try {
-//         const request = await axios.get("https://api.restful-api.dev/objects");
+//         const request = 'a success request amigo';
 //         if(!request) return res.status(400).json("sorry friend");
 //         return res.status(200).json(JSON.stringify(request))
 //     } catch (error) {
@@ -46,4 +33,20 @@ export default app;
 //         res.status(500).json('my bad dog')
 //     }
 // });
+
+app.post("/api/post", async (req, res) => {
+    try {
+      const response = await axios.get("https://api.restful-api.dev/objects");
+      const request = response.data; // Assuming data property holds the response
+      if(!request) return res.status(400).json("sorry friend");
+      return res.status(200).json(JSON.stringify(request));
+    } catch (error) {
+      console.error(error); // Use console.error for more detailed logging
+      res.status(500).json('my bad dog');
+    }
+  });
+
+export default app;
+
+
 
