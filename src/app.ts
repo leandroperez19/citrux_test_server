@@ -9,10 +9,10 @@ import { FRONT_URL } from "./config";
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cors({
-    origin: 'https://citrux-test-client.netlify.app',
+    origin: FRONT_URL,
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true,
-    allowedHeaders: ['Content-Type', 'application/json']
+    allowedHeaders: ['Content-Type']
 }));
 app.use(cookieParser());
 app.use('/api', authRoutes);
