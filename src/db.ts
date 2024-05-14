@@ -3,7 +3,9 @@ import { MONGODB_URI } from "./config";
 
 export async function connectDB() {
   try {
-    const db = await mongoose.connect(MONGODB_URI);
+    const db = await mongoose.connect(MONGODB_URI, { serverApi: { version: '1' } });
+    await mongoose.connection.db.admin().command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
     console.log("connected to", db.connection.name);
   } catch (error) {
     console.log(error);

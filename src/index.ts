@@ -1,7 +1,15 @@
-import { connectDB } from './db'
-import { PORT } from './config'
-import app from './app'
+import { connectDB } from "./db";
+import { PORT } from "./config";
+import app from "./app";
 
-connectDB()
-app.listen(PORT)
-console.log(`server is running at port ${PORT}`)
+async function main() {
+    try {
+        await connectDB();
+        app.listen(PORT);
+        console.log(`Listening on port ${PORT}`);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+main();
