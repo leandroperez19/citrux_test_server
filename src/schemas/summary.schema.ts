@@ -5,7 +5,8 @@ export const createSummarySchema = z.object({
         .string({ required_error: "URL is required" })
         .min(6, "URL must contain more than 6 characters")
         .trim(),
-    userId: z
-        .string({ required_error: "User ID is required" })
-        .min(5, "User ID must contain more than 5 characters"),
+});
+
+export const deleteSummarySchema = z.object({
+    summaryId: z.string({ required_error: "Summary ID is required" }).min(6),
 });

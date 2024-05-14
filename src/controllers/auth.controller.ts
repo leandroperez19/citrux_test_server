@@ -8,6 +8,7 @@ import * as otpGenerator from "otp-generator";
 import { sendMail } from "../libs/nodemailer";
 import { OTPTemplate } from "../email-templates/OTP";
 import { TOKEN_SECRET } from '../config';
+import { unauthorizedError } from '../static/responses';
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -92,7 +93,7 @@ export const logout = (req: Request, res: Response) => {
 };
 
 export const profile = async (req: Request, res: Response) => {
-    const userFound = await User.findById(req.body.id);
+    const userFound = await User.findById(req.body.userId);
     if (!userFound)
         return res
             .status(404)
@@ -190,13 +191,13 @@ export const updatePassword = async (req: Request, res: Response) => {
 export const verifyToken = async (req: Request, res: Response) => {
     const { token } = req.cookies;
 
-    if(!token) return res.status(401).json({ code: 'error', message: 'Unauthorized' })
+    if(!token) return unauthorizedError(res)
 
     jwt.verify(token, TOKEN_SECRET, async (err: any, user: any) => {
-        if(err) return res.status(401).json({ code: 'error', message: 'Unauthorized' });
+        if(err) return unauthorizedError(res);
 
         const userFound = await User.findById(user?.id);
-        if(!userFound) return res.status(401).json({ code: 'error', message: 'Unauthorized' });
+        if(!userFound) return unauthorizedError(res);
 
         res.status(200).json({
             message: "User logged in successfully",

@@ -19,7 +19,7 @@ export const sendMail = async (
     template: string
 ) => {
     const info = await transporter.sendMail({
-        from: `"Summarizer" <${EMAIL}>`,
+        from: `"SummarAIzer" <${EMAIL}>`,
         to,
         subject,
         text: message,
