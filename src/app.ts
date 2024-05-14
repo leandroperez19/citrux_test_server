@@ -18,4 +18,8 @@ app.use(cookieParser());
 app.use('/api', authRoutes);
 app.use('/api', summaryRoutes);
 
+app.get('/', (req, res) => res.send('Hello'))
+app.get('/test', (req, res) => res.send('Test'))
+app.get('/test/test', (req, res) => res.send('Test/test'))
+
 export default app;
