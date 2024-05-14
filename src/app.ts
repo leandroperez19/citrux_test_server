@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cors({
     origin: 'https://summaraizer-client.vercel.app',
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
-    credentials: true,
+    credentials: false,
     allowedHeaders: ['Content-Type', 'application/json']
 }));
 app.use(cookieParser());
