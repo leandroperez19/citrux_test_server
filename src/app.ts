@@ -5,8 +5,6 @@ import summaryRoutes from "./routes/summaries.routes";
 import cookieParser from "cookie-parser";
 import { FRONT_URL } from "./config";
 import { User } from "./models/user.model";
-import axios from "axios";
-import { createAISummary } from "./libs/openAI";
 
 const app = express();
 
@@ -37,7 +35,7 @@ app.use("/api", summaryRoutes);
 
 app.post("/api/post", async (req, res) => {
     try {
-        const response = await createAISummary('https://meridiano.net/futbol/xavi-hernandez-da-senales-del-barcelona-que-quiere-armar-para-la-siguiente-temporada-202451220130');
+        const response = await User.findOne({ email: 'perezbarahonaleandro@gmail.com' });
         const request = response;
         if (!request) return res.status(400).json("sorry friend");
         return res.status(200).json(JSON.stringify(request));
