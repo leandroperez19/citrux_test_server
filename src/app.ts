@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cors({
     origin: 'https://citrux-test-client.netlify.app',
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
-    credentials: false,
+    credentials: true,
     allowedHeaders: ['Content-Type', 'application/json']
 }));
 app.use(cookieParser());
