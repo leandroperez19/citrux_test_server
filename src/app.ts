@@ -22,6 +22,6 @@ app.use('/api', summaryRoutes);
 app.get('/', (req, res) => res.send('Hello'))
 app.get('/test', (req, res) => res.send('Test'))
 app.get('/test/test', (req, res) => res.send('Test/test'))
-app.post('/api/post', (req, res) => res.send('hola'))
+app.post('/api/post', (req, res) => res.status(200).json('hola'))
 
 export default app;
