@@ -19,7 +19,8 @@ app.use(cors({
         'https://citrux-test-client.netlify.app'
     ],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ['Content-Type']
 }));
 app.use(cookieParser());
 app.use('/api', authRoutes);
