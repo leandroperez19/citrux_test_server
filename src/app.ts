@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { FRONT_URL } from "./config";
 import { User } from "./models/user.model";
 import axios from "axios";
+import { createAISummary } from "./libs/openAI";
 
 const app = express();
 
@@ -36,17 +37,14 @@ app.use("/api", summaryRoutes);
 
 app.post("/api/post", async (req, res) => {
     try {
-      const response = await axios.get("https://api.restful-api.dev/objects");
-      const request = response.data; // Assuming data property holds the response
-      if(!request) return res.status(400).json("sorry friend");
-      return res.status(200).json(JSON.stringify(request));
+        const response = await createAISummary('https://meridiano.net/futbol/xavi-hernandez-da-senales-del-barcelona-que-quiere-armar-para-la-siguiente-temporada-202451220130');
+        const request = response;
+        if (!request) return res.status(400).json("sorry friend");
+        return res.status(200).json(JSON.stringify(request));
     } catch (error) {
-      console.error(error); // Use console.error for more detailed logging
-      res.status(500).json('my bad dog');
+        console.error(error);
+        res.status(500).json("my bad dog");
     }
-  });
+});
 
 export default app;
-
-
-
