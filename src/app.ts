@@ -9,7 +9,7 @@ import { FRONT_URL } from "./config";
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cors({
-    origin: 'https://summaraizer-client.vercel.app',
+    origin: 'https://citrux-test-client.netlify.app/',
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: false,
     allowedHeaders: ['Content-Type', 'application/json']
