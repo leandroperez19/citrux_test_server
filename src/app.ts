@@ -9,7 +9,15 @@ import { FRONT_URL } from "./config";
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cors({
-    origin: FRONT_URL,
+    origin: 
+    [
+        'http://localhost:5173', 
+        'http://localhost:5173/sign-up', 
+        'http://localhost:5173/sign-in',
+        'https://citrux-test-client.netlify.app/sign-up', 
+        'https://citrux-test-client.netlify.app/sign-in',
+        'https://citrux-test-client.netlify.app'
+    ],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true
 }));
