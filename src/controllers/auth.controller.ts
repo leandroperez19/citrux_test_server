@@ -66,11 +66,13 @@ export const login = async (req: Request, res: Response) => {
         const today = new Date();
         const oneDay = 24 * 60 * 60 * 1000;
         const expirationDate = new Date(today.getTime() + oneDay);
+        console.log(token)
 
         res.cookie("token", token, {
             expires: expirationDate,
-            // domain: DOMAIN,
-            sameSite: 'lax',
+            sameSite: "none",
+            httpOnly: false,
+            secure: true
         });
 
         res.status(200).json({
