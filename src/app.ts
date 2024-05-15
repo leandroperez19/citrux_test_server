@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import summaryRoutes from "./routes/summaries.routes";
+import chatRoutes from './routes/chat.routes';
 import cookieParser from "cookie-parser";
 import { FRONT_URL, TOKEN_SECRET } from "./config";
 
@@ -20,5 +21,6 @@ app.use(
 app.use(cookieParser());
 app.use("/api", authRoutes);
 app.use("/api", summaryRoutes);
+app.use("/api", chatRoutes)
 
 export default app;
