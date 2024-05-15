@@ -70,7 +70,7 @@ export const login = async (req: Request, res: Response) => {
         res.cookie("token", token, {
             expires: expirationDate,
             // domain: DOMAIN,
-            sameSite: 'strict'
+            sameSite: 'lax',
         });
 
         res.status(200).json({
