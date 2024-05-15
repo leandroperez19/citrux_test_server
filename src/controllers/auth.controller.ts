@@ -7,7 +7,7 @@ import { createAccessToken } from "../libs/jwt";
 import * as otpGenerator from "otp-generator";
 import { sendMail } from "../libs/nodemailer";
 import { OTPTemplate } from "../email-templates/OTP";
-import { DOMAIN, FRONT_URL, TOKEN_SECRET } from '../config';
+import { TOKEN_SECRET } from '../config';
 import { unauthorizedError } from '../static/responses';
 
 export const register = async (req: Request, res: Response) => {
@@ -26,7 +26,18 @@ export const register = async (req: Request, res: Response) => {
         const savedUser = await user.save();
         const token = await createAccessToken({ id: savedUser._id });
 
-        res.cookie("token", token);
+        
+        const today = new Date();
+        const oneDay = 24 * 60 * 60 * 1000;
+        const expirationDate = new Date(today.getTime() + oneDay);
+
+        res.cookie("token", token, {
+            expires: expirationDate,
+            sameSite: "none",
+            httpOnly: false,
+            secure: true
+        });
+
         res.status(201).json({
             message: "User created successfully",
             user: {
@@ -66,7 +77,6 @@ export const login = async (req: Request, res: Response) => {
         const today = new Date();
         const oneDay = 24 * 60 * 60 * 1000;
         const expirationDate = new Date(today.getTime() + oneDay);
-        console.log(token)
 
         res.cookie("token", token, {
             expires: expirationDate,
@@ -97,6 +107,9 @@ export const login = async (req: Request, res: Response) => {
 export const logout = (req: Request, res: Response) => {
     res.cookie("token", "", {
         expires: new Date(0),
+        sameSite: "none",
+        httpOnly: false,
+        secure: true
     });
     return res
         .status(200)
@@ -180,9 +193,6 @@ export const updatePassword = async (req: Request, res: Response) => {
             return res
                 .status(400)
                 .json({ code: "error", message: "User not found" });
-
-        const token = await createAccessToken({ id: updatedUser._id });
-        res.cookie("token", token);
 
         await OTP.findOneAndDelete({ userEmail: email })
 
