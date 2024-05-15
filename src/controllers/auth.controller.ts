@@ -7,7 +7,7 @@ import { createAccessToken } from "../libs/jwt";
 import * as otpGenerator from "otp-generator";
 import { sendMail } from "../libs/nodemailer";
 import { OTPTemplate } from "../email-templates/OTP";
-import { TOKEN_SECRET } from '../config';
+import { DOMAIN, FRONT_URL, TOKEN_SECRET } from '../config';
 import { unauthorizedError } from '../static/responses';
 
 export const register = async (req: Request, res: Response) => {
@@ -68,8 +68,11 @@ export const login = async (req: Request, res: Response) => {
         const expirationDate = new Date(today.getTime() + oneDay);
 
         res.cookie("token", token, {
-            expires: expirationDate
+            expires: expirationDate,
+            // domain: DOMAIN,
+            sameSite: 'strict'
         });
+
         res.status(200).json({
             message: "User logged in successfully",
             user: {
