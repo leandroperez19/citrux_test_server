@@ -17,11 +17,6 @@ export const askQuestion = async (msg: string, article: string) => {
         code: if the question refers to the article: "success" | if it doesn't refers to the article or is something random: "error",
         message: if code "success": your answer to the question | if code "error": "Sorry I can only answer question that have something to do with the article" or something more polite if you like
     }
-    also if you cannot access the article return:
-    {
-        code: "error",
-        message: "Sorry, I was unable to access the article"
-    }
     `
     return baseAIget(question)
 }
