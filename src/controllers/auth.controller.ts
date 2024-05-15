@@ -63,7 +63,13 @@ export const login = async (req: Request, res: Response) => {
 
         const token = await createAccessToken({ id: userFound._id });
 
-        res.cookie("token", token);
+        const today = new Date();
+        const oneDay = 24 * 60 * 60 * 1000;
+        const expirationDate = new Date(today.getTime() + oneDay);
+
+        res.cookie("token", token, {
+            expires: expirationDate
+        });
         res.status(200).json({
             message: "User logged in successfully",
             user: {

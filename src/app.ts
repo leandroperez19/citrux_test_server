@@ -3,8 +3,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import summaryRoutes from "./routes/summaries.routes";
 import cookieParser from "cookie-parser";
-import { FRONT_URL } from "./config";
-import { User } from "./models/user.model";
+import { FRONT_URL, TOKEN_SECRET } from "./config";
 
 const app = express();
 
@@ -21,17 +20,5 @@ app.use(
 app.use(cookieParser());
 app.use("/api", authRoutes);
 app.use("/api", summaryRoutes);
-
-app.get("/api/get", async (req, res) => {
-    try {
-        const response = await User.findOne({ email: 'perezbarahonaleandro@gmail.com' });
-        const request = response;
-        if (!request) return res.status(400).json("sorry friend");
-        return res.status(200).json(JSON.stringify(request));
-    } catch (error) {
-        console.error(error);
-        res.status(500).json("my bad dog");
-    }
-});
 
 export default app;
