@@ -8,6 +8,6 @@ const router = Router()
 
 router.post('/ask-question', validateSchema(createMessageSchema), authRequired, createMessage);
 
-router.get('/get-messages', validateSchema(getMessagesSchema), getMessages)
+router.get('/get-messages/:summary', authRequired, getMessages)
 
 export default router;

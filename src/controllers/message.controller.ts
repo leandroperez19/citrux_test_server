@@ -33,7 +33,7 @@ export const createMessage = async (req: Request, res: Response) => {
         }
         const savedAIMsg = await new Message(AIMessage).save();
 
-        return res.status(201).json({ code: "success", messages: [savedAIMsg, savedUserMsg] });
+        return res.status(201).json({ code: "success", messages: [savedUserMsg, savedAIMsg] });
     } catch (e) {
         console.log(e);
         return internalServerError(res);
@@ -42,9 +42,10 @@ export const createMessage = async (req: Request, res: Response) => {
 
 export const getMessages = async (req: Request, res: Response) => {
     try {
-        const { userId, summaryId } = req.body;
+        const { userId } = req.body;
+        const { summary } = req.params;
 
-        const messages = Message.find({ userId, summaryId })
+        const messages = await Message.find({ userId, summaryId: summary })
 
         if(!messages) return res.status(404).json({ code: "error", message: "Sorry, we couldn't find any messages" })
 

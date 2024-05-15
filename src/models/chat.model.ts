@@ -19,6 +19,9 @@ const messageModel = new mongoose.Schema(
             enum: ["user", "AI"],
             required: true,
         }
+    },
+    {
+        timestamps: true
     }
 )
 
