@@ -42,7 +42,7 @@ export const createMessage = async (req: Request, res: Response) => {
             await saveMessage(summaryId, userId, question, 'user');
             await saveMessage(summaryId, userId, response.message, "AI");
 
-            return res.status(201).json({ code: "success", messages: "Question created successfully" })
+            return res.status(201).json({ code: "success", message: "Question created successfully" })
         }
 
         const response = await askQuestion(question, foundSummary.url);
@@ -53,7 +53,7 @@ export const createMessage = async (req: Request, res: Response) => {
         await saveMessage(summaryId, userId, question, 'user');
         await saveMessage(summaryId, userId, response.message, "AI");
 
-        return res.status(201).json({ code: "success", messages: "Question created successfully" });
+        return res.status(201).json({ code: "success", message: "Question created successfully" });
     } catch (e) {
         console.log(e);
         return internalServerError(res);
