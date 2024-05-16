@@ -11,24 +11,26 @@ interface OpenAIResponse {
 
 export const askQuestion = async (msg: string, article: string, previousQuestions?: {role: string, content: string}[]) => {
     const question = 
-    `could you answer this question or message ${msg}. 
-    But only if it refers to this article ${article}. 
+    `Please answer this question ${msg} if it's related to the article: ${article} or related to a previous question. 
     always return a JSON with this format:
     { 
-        code: if the question refers to the article or a previous question or answer or have the same context of the conversation: "success"| if it doesn't refers to the article a previous question or answer or is something random or you cant read the article: "error",
-        message: if code "success": your answer to the question | if code "error": "Sorry I can only answer question that have something to do with the article" or something more detailed
+        code: the question is related to the article or previous questions: "success"| if it's not or you cannot access the article: "error",
+        message: if code "success": your answer to the question | if code "error": the error
     }
     `
     return baseAIget(question, previousQuestions)
 }
 
-export const createAISummary = async (question: string) => {
+export const createAISummary = async (link: string) => {
     const ask = 
-    `could you make a summary of this article 
-    ${question}? always return a JSON with this format 
-    { code: if you could create it: "success" | if it's not an article or you couldn't create it: "error", 
-    message: if code success the article summary if you could do it in html format with h and p that'd be awesome  
-    | if code error: error message }`;
+    `Please crate a summary of this article ${link} only if it's a link an is an informative article, like news, press or an informative page. 
+    always return a JSON with this format 
+    { 
+        code: if it's an accessible link and an article: "success" | if not: "error", 
+        message: if code "success": the article summary in html format with a <h2> with the summary title and rest just a <p> or multiple <p>  
+        | if code error: error message
+    }`;
+
     return baseAIget(ask);
 };
 
