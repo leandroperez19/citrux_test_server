@@ -39,8 +39,8 @@ export const createMessage = async (req: Request, res: Response) => {
             if(!response) return res.status(400).json({ code: "error", message: "Sorry, I couldn't process that question" })
             if(response.code === 'error') return res.status(400).json(response);
 
-            const userMessage = await saveMessage(summaryId, userId, question, 'user');
-            const AIMessage = await saveMessage(summaryId, userId, response.message, "AI");
+            await saveMessage(summaryId, userId, question, 'user');
+            await saveMessage(summaryId, userId, response.message, "AI");
 
             return res.status(201).json({ code: "success", messages: "Question created successfully" })
         }
@@ -50,8 +50,8 @@ export const createMessage = async (req: Request, res: Response) => {
         if(!response) return res.status(400).json({ code: "error", message: "Sorry, I couldn't process that question" })
         if(response.code === 'error') return res.status(400).json(response);
 
-        const userMessage = await saveMessage(summaryId, userId, question, 'user');
-        const AIMessage = await saveMessage(summaryId, userId, response.message, "AI");
+        await saveMessage(summaryId, userId, question, 'user');
+        await saveMessage(summaryId, userId, response.message, "AI");
 
         return res.status(201).json({ code: "success", messages: "Question created successfully" });
     } catch (e) {
