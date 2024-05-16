@@ -34,12 +34,13 @@ export const createSummary = async (req: Request, res: Response) => {
 
 export const deleteSummary = async (req: Request, res: Response) => {
     try {
-        const { summaryId } = req.body;
-        const summaryDeleted = await Summary.findByIdAndDelete(summaryId);
+        const { summary } = req.params;
+
+        const summaryDeleted = await Summary.findByIdAndDelete(summary);
 
         if(!summaryDeleted) return res.status(400).json({ code: 'error', message: "Sorry, we couldn't find that summary" })
         
-        return res.status(200).json({ code: "success", message: `${summaryId} deleted successfully` })
+        return res.status(200).json({ code: "success", message: `${summary} deleted successfully` })
 
     } catch (e) {
         console.log(e);

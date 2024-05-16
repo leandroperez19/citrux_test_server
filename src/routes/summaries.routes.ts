@@ -8,7 +8,7 @@ const router = Router()
 
 router.post('/create-summary', validateSchema(createSummarySchema), authRequired, createSummary);
 
-router.delete('/delete-summary', validateSchema(deleteSummarySchema), authRequired, deleteSummary);
+router.delete('/delete-summary/:summary', authRequired, deleteSummary);
 
 router.get('/get-summaries', authRequired, getSummaries);
 
