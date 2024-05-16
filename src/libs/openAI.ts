@@ -29,7 +29,7 @@ export const createAISummary = async (question: string) => {
     { code: if you could create it: "success" | if it's not an article or you couldn't create it: "error", 
     message: if code success the article summary if you could do it in html format with h and p that'd be awesome  
     | if code error: error message }`;
-    return baseAIget(ask,);
+    return baseAIget(ask);
 };
 
 export const baseAIget = async (content: string, previousQuestion?: any): Promise<OpenAIResponse> => {
