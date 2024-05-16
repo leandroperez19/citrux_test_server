@@ -4,7 +4,8 @@ export const createSummarySchema = z.object({
     url: z
         .string({ required_error: "URL is required" })
         .min(6, "URL must contain more than 6 characters")
-        .trim(),
+        .trim()
+        .url("Invalid URL"),
 });
 
 export const deleteSummarySchema = z.object({
