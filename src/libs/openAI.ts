@@ -23,11 +23,11 @@ export const askQuestion = async (msg: string, article: string, previousQuestion
 
 export const createAISummary = async (link: string) => {
     const ask = 
-    `Please crate a summary of this article ${link} only if it's a link an is an informative article, like news, press or an informative page. 
+    `If this ${link} is a link please crate a summary of it only if it's an informative article, like news, press or an informative page or a product from a web store like amazon, ebay, etc. 
     always return a JSON with this format 
     { 
-        code: if it's an accessible link and an article: "success" | if not: "error", 
-        message: if code "success": the article summary in html format with a <h2> with the summary title and rest just a <p> or multiple <p>  
+        code: if it's a link and is accessible and an informative article or a product: "success" | if not: "error", 
+        message: if code "success": the article or product summary in html format with a <h2> with the summary title and rest just a <p> or multiple <p>  
         | if code error: error message
     }`;
 
