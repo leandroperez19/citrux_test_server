@@ -15,8 +15,8 @@ export const askQuestion = async (msg: string, article: string, previousQuestion
     But only if it refers to this article ${article}. 
     always return a JSON with this format:
     { 
-        code: if the question refers to the article: "success" | if it doesn't refers to the article or is something random or you cant read the article: "error",
-        message: if code "success": your answer to the question | if code "error": "Sorry I can only answer question that have something to do with the article" or something more polite if you like
+        code: if the question refers to the article or a previous question or answer: "success"| if it doesn't refers to the article a previous question or answer or is something random or you cant read the article: "error",
+        message: if code "success": your answer to the question | if code "error": "Sorry I can only answer question that have something to do with the article" or something more detailed
     }
     `
     return baseAIget(question, previousQuestions)
