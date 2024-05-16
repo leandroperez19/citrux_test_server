@@ -22,24 +22,24 @@ export const askQuestion = async (msg: string, article: string, previousQuestion
 }
 
 export const createAISummary = async (link: string) => {
-    // const ask = 
-    // `If this ${link} is a link please crate a summary of it only if it's an informative article, like news, press or an informative page, don't accept links from social media, stores, or pages that are not informative. 
-    // always return a JSON with this format 
-    // { 
-    //     code: if it's a link and is accessible and an informative article: "success" | if not: "error", 
-    //     message: if code "success": the article or product summary in html format with a <h2> with the summary title and rest just a <p> or multiple <p>  
-    //     | if code error: error message
-    // }`;
+    const ask = 
+    `If this ${link} is a link please crate a summary of it only if it's an informative article, like news, press or an informative page, don't accept links from social media, stores, videos, or pages that are not informative. 
+    always return a JSON with this format 
+    { 
+        code: if it's a link and is accessible and an informative article: "success" | if not: "error", 
+        message: if code "success": the article or product summary in html format with a <h2> with the summary title and rest just a <p> or multiple <p>  
+        | if code error: error message
+    }`;
 
-    const ask2 = `
-        An explanation of how what you gonna return like if it was code
-        if(${link} !== a link) return { code: "error", message: "Invalid link, please provide a valid one" }
-        if(!${link}) return { code: "error", message: "Sorry, I was unable to access that link" }
-        if(!${link}.include['wikis', 'news', 'informative articles', 'press']) return { code: "error", message: "Sorry, I can only summarize informative articles" }
-        return { code: "success", message: a summary of the article with HTML format, a title for the summary in an h2, and the rest just p }
-    `
+    // const ask2 = `
+    //     An explanation of how what you gonna return like if it was code
+    //     if(${link} !== a link) return { code: "error", message: "Invalid link, please provide a valid one" }
+    //     if(!${link}) return { code: "error", message: "Sorry, I was unable to access that link" }
+    //     if(!${link}.include['wikis', 'news', 'informative articles', 'press']) return { code: "error", message: "Sorry, I can only summarize informative articles" }
+    //     return { code: "success", message: a summary of the article with HTML format, a title for the summary in an h2, and the rest just p }
+    // `
 
-    return baseAIget(ask2);
+    return baseAIget(ask);
 };
 
 export const baseAIget = async (content: string, previousQuestion?: any): Promise<OpenAIResponse> => {
