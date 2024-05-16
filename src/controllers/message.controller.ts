@@ -12,6 +12,27 @@ export const createMessage = async (req: Request, res: Response) => {
         if(!foundSummary) return res.status(404).json({ code: "error", message: "Sorry we couldn't found the article you're asking about" })
         if(!foundSummary.url) return
 
+        const previousQuestions = await Message.find({ summaryId });
+
+        if(previousQuestions && previousQuestions.length > 0) {
+            const newArray = [];
+
+            for (const element of previousQuestions.slice(0, 10)) {
+                const role = element.from === "user" ? "user" : "system";
+                const content = element.message;
+
+                const newObject = {
+                    role,
+                    content
+                };
+
+                newArray.push(newObject);
+            }
+
+            const response = await askQuestion(question, foundSummary.url, newArray);
+            return res.status(200).json(response)
+        }
+
         const response = await askQuestion(question, foundSummary.url);
 
         if(!response) return res.status(400).json({ code: "error", message: "Sorry, I couldn't process that question" })
